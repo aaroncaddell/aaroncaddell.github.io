@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+
+	--- *AARON SPEAKING* this is the video i used for this: ---
+	--- https://www.youtube.com/watch?v=u-RLu_8kwA0&t=50s   ---
+-->
+<html>
+	<head>
+		<title>Aaron Caddell</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Aaron Caddell</h1>
+						<p>Mechanical Engineer with a passion for mechanical design engineering.  </p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Portfolio</a>
+					</header>
+
+				<!-- Nav -->
+				<nav id="nav">
+					<ul class="links">
+						<li class="active"><a href="index.html">My Portfolio</a></li>
+						<li><a href="aboutme.html">About Me</a></li>
+					</ul>
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/aaroncaddell/" class="icon brands fa-linkedin"><span class="label">GitHub</span></a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+                        <article class="post">
+                            <header class="major">
+
+                                <h2><a href="#">Wildfire Particulate Dispersion Model</a></h2>
+                                
+                            </header>
+                            <a href="#" class="image main"><img src="images/EF2.png" alt="" /></a>
+							
+							<ul class="actions special">
+                                <p>The wildfire particulate dispersion model project was an environmental fluid mechanics project in which students modeled wildfire pollution using Matlab. A simplified Gaussian plume was used to model the particulate concentration which was plotted using Matlab’s integrated contour function. The Matlab script is able to output a plot for N number of wildfires at different wind velocities as shown in the figures below.</p>
+							</ul>
+
+							<div class="box alt">
+								<div class="row gtr-50 gtr-uniform">
+									<div class="col-6"><span class="image fit"><img src="images/EF1.png" alt="" /></span></div>
+									<div class="col-6"><span class="image fit"><img src="images/EF4.png" alt="" /></span></div>
+								</div>
+							</div>
+
+
+							<h2>Matlab Code</h2>
+							<pre><code>% 1. Particulate dispersion due to wildﬁres
+% Aaron Caddell
+
+
+clc; clear;close all;
+
+% Inputs --- for parts (b) and (c) set N=1
+N = 3;               % number of wildfires
+xi = rand(N,1);      % wildfire (source i) x coordinate [m]
+yi = rand(N,1);      % wildfire (source i) y coordinate [m]
+u = [1,1];           % horizontal wind velocity [m/s]
+K = 0.1;             % effective diffusion constant [m^s/s]
+Q = rand(N,1);       % rate of emisison [kg/s]
+
+x = linspace(-0.5,2,200);
+y = linspace(-0.5,2,200);
+[X,Y] = meshgrid(x,y);
+
+C = 1;
+
+% Outputs
+ for j = 1:N
+     a = sqrt((X-xi(j)).^2+(Y-yi(j)).^2);
+     si = ((X-xi(j)).*u(1)+(Y-yi(j)).*u(2))./(norm(u));
+     d = (a.^2-si.^2);
+     
+     % alternate code using non simplified version of C
+     %sigma = (2.*K.*si);
+     %C = C+(Q(j)./(2*pi*norm(u).*(sigma))).*exp(-(d)./(2.*(sigma))).*(si>=0);
+     
+     C = C+(Q(j)./(4*pi*norm(u).*(K.*si))).*exp(-(d)./(4.*(K.*si))).*(si>=0); % Concentration [ppm]
+     C(isnan(C))= 1;
+     Cmax = 5;
+     C(C>Cmax)= Cmax;
+     
+ end
+
+
+%Plot
+contourf(X,Y,C,50,'linestyle','none')
+xlabel('x-coordinate'); ylabel('y-coordinate'); title('Particulate Dispersion Due to Wildﬁres');
+h = colorbar;
+set(get(h,'label'),'string','Concentration');
+
+</code></pre>
+                        </article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<section>
+								<h3>Email</h3>
+								<p><a href="mailto:aaroncaddell01@gmail.com">aaroncaddell01@gmail.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://www.linkedin.com/in/aaroncaddell/" class="icon brands fa-linkedin"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Aaron Caddell</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
